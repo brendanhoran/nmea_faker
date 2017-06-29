@@ -35,7 +35,7 @@ class nmea_sentence(Resource):
         return(nmea_gprmc, 201)
 
 def run_server():
-    api.add_resource(server_info, '/nmea_faker/')
+    api.add_resource(server_info, '/nmea_faker')
     api.add_resource(nmea_sentence, '/nmea_faker/sentence')
     app.run(debug=True)
 
