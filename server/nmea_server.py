@@ -1,17 +1,21 @@
 #!/usr/bin/python
+# License : BSD 3-Clause
+# Version :0.0.1
+# Author  : Brendan Horan
+
 
 import pynmea2, time
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
 
-app = Flask("nmea_faker")
+app = Flask(__name__)
 api = Api(app, prefix="/api/v1")
-#api = Api(app)
+
 
 nmea_sentence_parser = reqparse.RequestParser()
-nmea_sentence_parser.add_argument("lat", type=float)
-nmea_sentence_parser.add_argument("lon", type=float)
+nmea_sentence_parser.add_argument("lat", type=float, required=True, help="Input latitude coordinates")
+nmea_sentence_parser.add_argument("lon", type=float, required=True, help="Input longitude coordinates")
 
 
 class server_info(Resource):
@@ -19,7 +23,6 @@ class server_info(Resource):
         info = "nmea_faker server"
         return(info, 200)
 
-# eg curl -X put -H "Content-Type: application/json" -d '{"lat": "123","lon": "456"}' http://localhost:5000/nmea_faker/sentence
 class nmea_sentence(Resource):
     def put(self):
         coordinates = nmea_sentence_parser.parse_args(strict=True)
@@ -36,5 +39,5 @@ def run_server():
     api.add_resource(nmea_sentence, '/nmea_faker/sentence')
     app.run(debug=True)
 
-run_server()
-
+if __name__ == '__main__':
+    run_server()
