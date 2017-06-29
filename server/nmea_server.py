@@ -35,8 +35,7 @@ class nmea_sentence(Resource):
         utc_time = time.strftime("%H%M%S", time.gmtime())
         utc_date = time.strftime("%d%m%y", time.gmtime())
         nmea_raw = "$GPRMC,{0},A,{2},N,{3},E,0.168,,{1},,,A".format(
-            utc_time,
-            utc_date,
+            utc_time, utc_date,
             coordinates.lat, coordinates.lon)
         nmea_gprmc = pynmea2.parse(nmea_raw)
         nmea_gprmc = str(nmea_gprmc)
