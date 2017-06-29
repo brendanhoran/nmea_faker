@@ -16,12 +16,10 @@ api = Api(app, prefix="/api/v1")
 
 nmea_sentence_parser = reqparse.RequestParser()
 nmea_sentence_parser.add_argument(
-    "lat", type=float,
-    required=True,
+    "lat", type=float, required=True,
     help="Input latitude coordinates")
 nmea_sentence_parser.add_argument(
-    "lon",
-    type=float,
+    "lon", type=float,
     required=True, help="Input longitude coordinates")
 
 
