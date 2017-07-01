@@ -6,6 +6,7 @@
 
 import pynmea2
 import time
+import argparse
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
@@ -13,6 +14,11 @@ from flask_restful import Resource, Api, reqparse
 app = Flask(__name__)
 api = Api(app, prefix="/api/v1")
 
+cli_parser = argparse.ArgumentParser()
+cli_parser.add_argument("ip", help="IP address to bind to")
+cli_parser.add_argument("port", help="Port to bind to")
+cli_parser.add_argument("-d", "--debug", help="Run sever with flask debug enabed")
+cli_args = cli_parser.parse_args()
 
 nmea_sentence_parser = reqparse.RequestParser()
 nmea_sentence_parser.add_argument(
@@ -45,7 +51,7 @@ class nmea_sentence(Resource):
 def run_server():
     api.add_resource(server_info, '/nmea_faker')
     api.add_resource(nmea_sentence, '/nmea_faker/sentence')
-    app.run(debug=True)
+    app.run(port=int(cli_args.port), host=(cli_args.ip), debug=(cli_args.debug))
 
 if __name__ == '__main__':
     run_server()
