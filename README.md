@@ -12,4 +12,5 @@ curl -X put -H "Content-Type: application/json" -d '{"lat": "123","lon": "456"}'
 ```    
 
 Also supports ESP32 micro as a client.    
-The client will sent a REST reqest to the server every X seconds and then send the raw GPMRC string out over serial to the device expecting aGPS GPMRC string
+The client will sent a REST reqest to the server every X seconds and then send the raw GPRMC string out over serial to the device expecting aGPS GPRMC string.    
+Thus allowing dumb devices to sync via GPRMC over local networks with no GPS devices,   
