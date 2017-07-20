@@ -1,0 +1,1 @@
+print("Wifi setup beginning")
