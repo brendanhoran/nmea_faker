@@ -3,7 +3,7 @@ import sys
 import time
 
 print("Wifi setup beginning")
-wlan = network.WLAN(network.STA_IF)
+wlan = network.WLAN(network.STA_IF); wlan.active(True)
 wlan.active(True)
 wlan.connect("SSID", "PASSWORD")
 time.sleep(5)

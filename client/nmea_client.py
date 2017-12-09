@@ -1,14 +1,22 @@
+# Author Brendan Horan
+# License : BSD 3-Clause
+# Description : Get a NMEA setence from the NMEA faker sever
+
 import urequests
 import time
+from machine import UART
 
-print("NMEA client beginning")
-print("REPL prompt will not spawn")
+class NMEA_Base:
+  def __init__(self,rx_pin, tx_pin,server_address):
+    uart = UART(1, 9600, timeout=0)
+    uart.init(9600, bits=8, parity=None, stop=1, rx=rx_pin, tx=tx_pin)
+    self.uart = uart
+    self.server_address = server_address
 
-task_start_time = time.time()
-while True:
-  sentence = urequests.put('http://nmea:5000/api/v1/nmea_faker/sentence',
+class NMEA_client(NMEA_Base):
+  def get_sentence(self):
+    sentence = urequests.put('http://'+self.server_address+'/api/v1/nmea_faker/sentence',
     json={'lat': '123','lon': '456'},
     headers={'content-type': 'application/json'})
-  print(sentence.text)
-  time.sleep(60.0 - ((time.time() - task_start_time) % 60.0))
-
+    self.uart.write(sentence.text)
+    return(sentence.text)
