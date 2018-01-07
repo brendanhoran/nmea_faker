@@ -8,8 +8,8 @@ from machine import UART
 
 class NMEA_Base:
   def __init__(self,rx_pin, tx_pin,server_address):
-    uart = UART(1, 9600, timeout=0)
-    uart.init(9600, bits=8, parity=None, stop=1, rx=rx_pin, tx=tx_pin)
+    uart = UART(1, 4800, timeout=0)
+    uart.init(4800, bits=8, parity=None, stop=1, rx=rx_pin, tx=tx_pin)
     self.uart = uart
     self.server_address = server_address
 
